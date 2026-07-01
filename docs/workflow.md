@@ -1,180 +1,173 @@
-# GenoWeekly — 发布工作流指南
+# GenoWeekly — 完整操作流程
 
-## 完整发布流程（每周一）
+> 从爬虫采集到 GitHub Pages 部署的完整步骤。
 
-### Step 0 (可选): 本地预览 UI
+---
 
-如果本地未安装 Ruby/Jekyll，可使用独立 HTML 文件预览效果：
+## 一次完整的发布流程
+
+### Step 0: 本地预览 UI（可选）
+
+直接浏览器打开 `_preview.html` 即可预览前端样式，无需安装 Ruby/Jekyll。
 
 ```bash
-# 直接浏览器打开 _preview.html
-xdg-open _preview.html
-# 或手动在文件管理器中双击 _preview.html
+# WSL
+explorer.exe _preview.html
+# 或手动双击 _preview.html
 ```
 
-`_preview.html` 是一个自包含的 HTML 文件，合并了所有页面（首页/归档/关于）和 JS 逻辑，用于 UI 审核。它不从 `_posts/` 读取数据（数据已硬编码在 HTML 中），因此仅用于前端样式验证，不替代 Jekyll 构建。
-
-### Step 1: 运行爬虫生成草稿
+### Step 1: 激活环境
 
 ```bash
+# 进入项目目录
 cd /mnt/c/Users/13637/Desktop/project/claudecode/BioinfoHub_2
 
-# 激活 uv 虚拟环境并运行爬虫
-/home/lile/software/miniconda3/bin/uv run python scraper/src/main.py
+# 同步爬虫依赖（首次运行或依赖变更后执行）
+/home/lile/software/miniconda3/bin/uv sync --project scraper
 ```
 
-爬虫执行内容：
+### Step 2: 运行爬虫生成草稿
+
+```bash
+/home/lile/software/miniconda3/bin/uv run --project scraper python src/main.py
+```
+
+爬虫自动完成：
 1. 并行抓取 BioRxiv RSS、PubMed API、GitHub Trending
 2. 自动分类到 7 个领域（基因组、转录组、单细胞、蛋白质组、表观遗传、宏基因组、时空组）
 3. 跨源去重
-4. 生成草稿文件到 `scraper/output/week-XX-preview.md`
+4. 生成草稿到 `scraper/output/<年份>-W<周数>-preview.md`
 
-输出示例：`scraper/output/2026-W27-preview.md`
+**常用选项：**
 
-### Step 2: 人工编辑审核
+| 参数 | 说明 |
+|------|------|
+| `--source biorxiv/pubmed/github` | 仅抓取指定数据源 |
+| `--week N --year Y` | 指定周数/年份（默认自动检测） |
+| `--output <路径>` | 指定输出路径（可直接输出到 _posts/） |
+| `-v` | 详细日志 |
+| `--fetch-only` | 仅抓取不渲染（调试用） |
 
-打开生成的草稿文件，逐条检查并修改：
+示例：
+
+```bash
+# 指定输出到 _posts/，跳过复制步骤
+/home/lile/software/miniconda3/bin/uv run --project scraper python src/main.py --output ../_posts/2026-07-14-week-28.md --week 28 --year 2026
+```
+
+### Step 3: 人工审核编辑
+
+打开生成的草稿文件，逐条处理：
 
 | 处理项 | 操作 |
 |--------|------|
-| 工具描述过长 | 精简到一行内 |
+| 描述过长 | 精简到一行内 |
 | 分类错误 | 调整到正确领域 |
-| 重复条目 | 删除重复（自动去重已处理大部分） |
+| 重复条目 | 删除（自动去重已处理大部分） |
 | 低质量/无关内容 | 删除 |
 | 缺失重要内容 | 手动补充 |
 | 前沿进展综述 | 基于爬虫素材自行撰写段落 |
 
-### Step 3: 发布正式帖子
+### Step 4: 发布正式帖子
 
-审核通过后，将内容移到 `_posts/` 目录：
+审核通过后，将草稿移到 `_posts/`：
 
 ```bash
-# 将编辑好的内容复制为正式帖子
-cp scraper/output/2026-W27-preview.md _posts/2026-07-06-week-27.md
-
-# 记得将文件开头的 layout 改为 week
-# 并补充 front matter 中的 summary 字段
+cp scraper/output/2026-W28-preview.md _posts/2026-07-14-week-28.md
 ```
 
-### Step 4: 推送部署
+> 如果 Step 2 已用 `--output` 直接输出到 `_posts/`，则跳过此步。
+
+### Step 5: 提交并推送部署
 
 ```bash
-git add _posts/2026-07-06-week-27.md
-git commit -m "weekly: GenoWeekly #27 — 2026-W27"
+git add _posts/2026-07-14-week-28.md
+git commit -m "weekly: GenoWeekly #28 — 2026-W28"
 git push origin main
 ```
 
-GitHub Actions 自动：
-1. 触发 Jekyll 构建
-2. 将站点部署到 GitHub Pages
-3. 访问 `https://<用户名>.github.io/GenoWeekly/` 查看效果
+推送后 GitHub Actions 自动：
+1. 构建 Jekyll 站点
+2. 推送到 `gh-pages` 分支
+3. GitHub Pages 自动更新
+
+访问：https://leli0912.github.io/BHub_3/
 
 ---
 
-## 爬虫配置管理
+## 首次使用配置
 
-### 首次使用配置
+### 1. 爬虫依赖
 
 ```bash
-# 创建项目根目录
 cd /mnt/c/Users/13637/Desktop/project/claudecode/BioinfoHub_2
-
-# 初始化 Python 项目
-/home/lile/software/miniconda3/bin/uv init scraper
+/home/lile/software/miniconda3/bin/uv sync --project scraper
 ```
 
-### 数据源配置 (scraper/config/sources.yaml)
+### 2. PubMed API Key（可选，推荐）
+
+编辑 `scraper/config/sources.yaml`，填入 NCBI API Key 以提高请求频率限制（无 Key 每秒最多 3 次，有 Key 每秒最多 10 次）：
 
 ```yaml
-biorxiv:
-  categories:
-    - bioinformatics
-    - genomics
-    - molecular_biology
-  days_lookback: 7
-  max_results_per_category: 50
-
 pubmed:
-  api_key: ""  # 可选，填入 NCBI API Key 可提高频率限制
-  email: ""    # 必填，NCBI 要求提供邮箱
-  queries:
-    - "(bioinformatics[All] OR computational biology[All]) AND (tool[All] OR software[All] OR database[All])"
-    - "(genomics[All] OR genome[All] OR "whole genome"[All]) AND (method[All] OR algorithm[All] OR pipeline[All])"
-    # ... 更多按领域划分的检索词
-  days_lookback: 7
-  max_results_per_query: 20
-
-github_trending:
-  since: weekly
-  max_repos: 15
-  topics_keywords:
-    - bioinformatics
-    - genomics
-    - computational-biology
-    - single-cell
-    - variant-calling
-    # ... 更多生信相关话题
+  api_key: "your_ncbi_api_key_here"
+  email: "your_email@example.com"
 ```
-
-### PubMed API 说明
-
-NCBI E-utilities 免费使用但有限制：
-- **无 API Key**：每秒最多 3 请求，超出会被 IP 封禁
-- **有 API Key**：每秒最多 10 请求
-- 建议注册 NCBI API Key 并配置到 `sources.yaml`
 
 注册地址：https://ncbi.nlm.nih.gov/account/
 
 ---
 
-## 爬虫运行选项 (main.py 设计)
+## 项目结构速览
 
-```bash
-# 完整运行（所有源 + 分类 + 渲染）
-uv run python src/main.py
-
-# 仅抓取不渲染（调试用）
-uv run python src/main.py --fetch-only
-
-# 仅某个数据源
-uv run python src/main.py --source biorxiv
-
-# 指定输出位置
-uv run python src/main.py --output ../_posts/2026-07-06-week-27.md
-
-# 指定周数（默认自动检测当前周）
-uv run python src/main.py --week 27
+```
+.
+├── _config.yml                # Jekyll 站点配置（url/baseurl）
+├── _posts/                    # 每周正式内容（Markdown）
+├── _layouts/                  # Jekyll 布局模板
+├── assets/css/main.css        # 全部样式
+├── _preview.html              # 独立 HTML 预览
+├── Gemfile                    # Ruby 依赖
+│
+├── scraper/                   # Python 爬虫
+│   ├── pyproject.toml         # uv 项目配置
+│   ├── src/main.py            # 入口
+│   ├── src/sources/           # 数据源采集
+│   ├── src/classifier.py      # 领域分类
+│   ├── src/dedup.py           # 跨源去重
+│   ├── src/renderer.py        # Markdown 渲染
+│   ├── config/                # 配置文件
+│   └── output/                # 草稿输出
+│
+├── .github/workflows/deploy.yml  # GitHub Actions 部署
+└── docs/                          # 文档
 ```
 
 ---
 
-## 目录与文件变更清单
+## 每周发布清单
 
-每次发布需要关注的文件：
-
-| 文件 | 动作 | 说明 |
-|------|------|------|
-| `_posts/YYYY-MM-DD-week-NN.md` | **新建** | 本周内容 |
-| `index.html` | 不动 | Jekyll 自动显示最新帖子 |
-| `archive.html` | 不动 | Jekyll 自动更新 |
-| `scraper/output/week-XX-preview.md` | 删除或保留 | 草稿文件，发布后可清理 |
-
-不需要动：
-- `_config.yml`（除非修改站点配置）
-- `_layouts/` 中的模板（除非修改页面设计）
-- `assets/css/main.css`（除非修改样式）
-- `scraper/` 下的代码（除非修改爬虫逻辑）
+- [ ] 运行爬虫生成草稿
+- [ ] 审核编辑草稿（精简、分类、去劣）
+- [ ] 移入 `_posts/` 目录
+- [ ] `git add` / `git commit` / `git push`
+- [ ] 确认 Actions 运行成功
+- [ ] 确认 https://leli0912.github.io/BHub_3/ 更新
 
 ---
 
 ## 故障排除
 
-### 构建失败
-- GitHub Pages 构建日志: 仓库 → Actions → 最新的 workflow run
-- 常见原因: Gemfile 与 GitHub Pages 版本不兼容
-- 解决方案: 确保 `Gemfile` 中的 `github-pages` gem 版本与 GitHub 当前版本一致
-
 ### 爬虫报错
-- BioRxiv RSS 不可用: 检查网络连接，换个时间段重试
-- PubMed API 429 错误: 超过频率限制，等待 1 分钟后重试，或配置 API Key
-- GitHub Trending 改版: 检查 HTML 解析逻辑是否需要更新
+
+| 错误 | 原因 | 解决 |
+|------|------|------|
+| PubMed 429 | 频率超限 | 等待 1 分钟重试，或配置 API Key |
+| BioRxiv 无结果 | 网络或 RSS 变更 | 检查网络，换个时间段重试 |
+| GitHub Trending 解析失败 | 页面改版 | 检查 `scraper/src/sources/github.py` |
+
+### 部署失败
+
+- 查看 Actions 日志：GitHub 仓库 → Actions → 最新的 workflow run
+- 构建失败通常与 Gemfile 版本有关，确保 `github-pages` gem 版本兼容
+- 404 检查：Pages 设置中 Branch 是否为 `gh-pages` / `(root)`

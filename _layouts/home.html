@@ -2,6 +2,11 @@
 layout: default
 ---
 
+{% assign domains = "genomics,transcriptomics,single-cell,proteomics,epigenomics,metagenomics,spatial-omics" | split: "," %}
+{% assign domain_cn = "基因组学,转录组学,单细胞组学,蛋白质组学,表观遗传学,宏基因组学,时空组学" | split: "," %}
+{% assign domain_en = "Genomics,Transcriptomics,Single-cell,Proteomics,Epigenomics,Metagenomics,Spatial-omics" | split: "," %}
+{% assign domain_desc = "基因组组装、变异检测、GWAS 等,RNA-seq、可变剪接、表达定量,scRNA-seq、细胞类型注释、多模态,质谱分析、蛋白互作、翻译后修饰,DNA 甲基化、组蛋白修饰、染色质状态,微生物组、16S、鸟枪法宏基因组,空间转录组、MERFISH、Visium" | split: "," %}
+
 <div class="hero">
   <div class="container">
     <h1 class="hero-title">{{ site.title }}</h1>
@@ -12,6 +17,8 @@ layout: default
 <div class="container">
   {% if paginator.posts.size > 0 %}
     {% assign latest = paginator.posts.first %}
+    {% assign dc = latest.domain_counts %}
+
     <section class="latest-issue">
       <div class="issue-header">
         <h2>{{ latest.title }}</h2>
@@ -21,13 +28,109 @@ layout: default
         {% if latest.summary %}
           <p class="issue-summary">{{ latest.summary }}</p>
         {% endif %}
+        {% if latest.sources.size > 0 %}
+          <div class="post-sources">
+            数据来源:
+            {% for source in latest.sources %}
+              <span class="source-badge">{{ source }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
 
-      <div class="issue-content">
-        {{ latest.content }}
-      </div>
+      {% if dc %}
+        <!-- ===== 领域速览 ===== -->
+        <div class="domain-intro">
+          <div class="domain-intro-header">📌 领域速览 — 点击卡片快速查看</div>
+          <div class="domain-intro-grid">
+            {% for i in (0..6) %}
+              {% assign did = domains[i] %}
+              {% assign count = dc[did] | default: 0 %}
+              <div class="domain-intro-card" data-domain="{{ did }}">
+                <span class="d-name">{{ domain_cn[i] }} <span class="d-en">{{ domain_en[i] }}</span></span>
+                <div class="d-desc">{{ domain_desc[i] }}</div>
+                {% if count > 0 %}
+                  <span class="d-status has-data">{{ count }} 条更新</span>
+                {% else %}
+                  <span class="d-status no-data">暂无更新</span>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- ===== 领域分布图 ===== -->
+        {% assign total = 0 %}
+        {% for i in (0..6) %}
+          {% assign total = total | plus: dc[domains[i]] | default: 0 %}
+        {% endfor %}
+        {% if total > 0 %}
+          {% assign max_count = 0 %}
+          {% for i in (0..6) %}
+            {% assign c = dc[domains[i]] | default: 0 %}
+            {% if c > max_count %}{% assign max_count = c %}{% endif %}
+          {% endfor %}
+          <div class="domain-chart">
+            <div class="chart-header">
+              <span>📊 领域分布图</span>
+              <span class="chart-total">本期共 <strong>{{ total }}</strong> 条内容</span>
+            </div>
+            <div class="chart-bars">
+              {% for i in (0..6) %}
+                {% assign did = domains[i] %}
+                {% assign count = dc[did] | default: 0 %}
+                <div class="chart-row">
+                  <span class="chart-label">{{ domain_cn[i] }}</span>
+                  <div class="chart-track">
+                    {% if count > 0 %}
+                      {% assign pct = count | times: 100 | divided_by: max_count %}
+                      <div class="chart-bar" style="width:{{ pct }}%"></div>
+                    {% else %}
+                      <div class="chart-bar empty" style="width:100%"></div>
+                    {% endif %}
+                  </div>
+                  <span class="chart-value">{{ count }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- ===== 领域侧边栏 + 内容 ===== -->
+        <div class="domain-layout">
+          <aside class="domain-sidebar" id="domainSidebar">
+            <div class="domain-sidebar-header">领域导航</div>
+            {% for i in (0..6) %}
+              {% assign did = domains[i] %}
+              {% assign count = dc[did] | default: 0 %}
+              <button class="domain-item {% if i == 0 %}active{% endif %}" data-domain="{{ did }}">
+                {{ domain_cn[i] }}
+                {% if count > 0 %}
+                  <span class="domain-count">{{ count }}</span>
+                {% else %}
+                  <span class="empty-dot"></span>
+                {% endif %}
+              </button>
+            {% endfor %}
+          </aside>
+
+          <main class="domain-content">
+            <div class="post-content">
+              {{ latest.content }}
+            </div>
+          </main>
+        </div>
+
+      {% else %}
+        <!-- ===== Fallback: no domain data ===== -->
+        <div class="post-content">
+          {{ latest.content }}
+        </div>
+      {% endif %}
     </section>
+
   {% else %}
+    <!-- ===== Empty State ===== -->
     <section class="empty-state">
       <h2>暂无内容</h2>
       <p>第一期 GenoWeekly 正在准备中，敬请期待。</p>
