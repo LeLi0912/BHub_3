@@ -407,15 +407,39 @@ tbody tr:hover { background: var(--color-row-hover); }
   font-style: italic;
 }
 
+/* --- Table Column Width Consistency --- */
+table { table-layout: fixed; }
+
+/* 3-column tables (tools: name | desc | link) */
+table:not(:has(thead th:nth-child(4))) th:nth-child(1),
+table:not(:has(thead th:nth-child(4))) td:nth-child(1) { width: 22%; }
+table:not(:has(thead th:nth-child(4))) th:nth-child(2),
+table:not(:has(thead th:nth-child(4))) td:nth-child(2) { width: 53%; }
+table:not(:has(thead th:nth-child(4))) th:nth-child(3),
+table:not(:has(thead th:nth-child(4))) td:nth-child(3) { width: 25%; }
+
+/* 4-column tables (papers: title | abstract | journal | link) */
+table:has(thead th:nth-child(4)) th:nth-child(1),
+table:has(thead th:nth-child(4)) td:nth-child(1) { width: 28%; }
+table:has(thead th:nth-child(4)) th:nth-child(2),
+table:has(thead th:nth-child(4)) td:nth-child(2) { width: 37%; }
+table:has(thead th:nth-child(4)) th:nth-child(3),
+table:has(thead th:nth-child(4)) td:nth-child(3) { width: 17%; }
+table:has(thead th:nth-child(4)) th:nth-child(4),
+table:has(thead th:nth-child(4)) td:nth-child(4) { width: 18%; }
+
 /* --- Post Content Tables (fallback) --- */
 .post-content table {
   width: 100%;
   border-collapse: collapse;
   margin: 16px 0 24px;
   font-size: 0.9rem;
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  table-layout: fixed;
+}
+.post-content td,
+.post-content th {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 .post-content thead { background: var(--color-accent-light); }
 .post-content th {
@@ -478,6 +502,8 @@ tbody tr:hover { background: var(--color-row-hover); }
   font-family: var(--font-serif);
   font-size: 1.2rem;
   margin-bottom: 16px;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 hr { border: none; border-top: 1px solid var(--color-border); margin: 28px 0; }
