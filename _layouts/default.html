@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} · {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.summary %}{{ page.summary }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  {% feed_meta %}
+  {% seo %}
+</head>
+<body>
+  <div class="wrapper">
+    <header class="site-header">
+      <div class="container">
+        <a href="{{ '/' | relative_url }}" class="site-title">GenoWeekly</a>
+        <nav class="site-nav">
+          <a href="{{ '/' | relative_url }}">首页</a>
+          <a href="{{ '/archive' | relative_url }}">归档</a>
+          <a href="{{ '/about' | relative_url }}">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-content">
+      {{ content }}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>GenoWeekly · 数据来源: BioRxiv, PubMed, GitHub · 由人工编辑发布</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+name: Validate skill
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: python3 scripts/validate_skill.py
+      - run: python3 scripts/evaluate_routes.py
+      - run: python3 scripts/check_project_guardrails.py assets/project-bootstrap --mode bootstrap --allow-template --skip-private-scan
+      - run: python3 scripts/check_project_guardrails.py assets/project-adoption --mode adoption --allow-template --skip-private-scan

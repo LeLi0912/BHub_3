@@ -1,0 +1,35 @@
+queries:
+  - >-
+    (bioinformatics[All] OR computational biology[All])
+    AND (tool[All] OR software[All] OR database[All] OR pipeline[All])
+    AND ("last 7 days"[Date - Create])
+
+  - >-
+    (genomics[All] OR genome[All] OR "whole genome"[All])
+    AND (method[All] OR algorithm[All] OR assembly[All] OR variant[All])
+    AND ("last 7 days"[Date - Create])
+
+  - >-
+    (transcriptomics[All] OR "RNA-seq"[All] OR "gene expression"[All])
+    AND (method[All] OR tool[All] OR pipeline[All])
+    AND ("last 7 days"[Date - Create])
+
+  - >-
+    ("single cell"[All] OR scRNA-seq[All] OR "single-cell"[All])
+    AND ("last 7 days"[Date - Create])
+
+  - >-
+    (proteomics[All] OR proteome[All] OR "mass spectrometry"[All])
+    AND ("last 7 days"[Date - Create])
+
+  - >-
+    (epigenomics[All] OR epigenome[All] OR methylation[All] OR chromatin[All])
+    AND ("last 7 days"[Date - Create])
+
+  - >-
+    (metagenomics[All] OR metagenome[All] OR microbiome[All] OR "16S"[All])
+    AND ("last 7 days"[Date - Create])
+
+  - >-
+    ("spatial transcriptomics"[All] OR "spatial omics"[All] OR MERFISH[All] OR Visium[All])
+    AND ("last 7 days"[Date - Create])

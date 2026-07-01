@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+scraper/.venv/
+scraper/src/__pycache__/
+
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude skills submodule
+.claude/skills/sliver-vibe-coding/.git/
+
+# Editor
+.vscode/
+.idea/

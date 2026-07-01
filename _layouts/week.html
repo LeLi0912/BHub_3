@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<article class="post">
+  <div class="container">
+    <header class="post-header">
+      <h1>{{ page.title }}</h1>
+      <div class="post-meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}">
+          {{ page.date | date: "%Y年%-m月%-d日" }} · 第{{ page.week }}周
+        </time>
+        {% if page.summary %}
+          <p class="post-summary">{{ page.summary }}</p>
+        {% endif %}
+        <div class="post-sources">
+          数据来源:
+          {% for source in page.sources %}
+            <span class="source-badge">{{ source }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </header>
+
+    <div class="post-content">
+      {{ content }}
+    </div>
+
+    <nav class="post-nav">
+      {% if page.previous.url %}
+        <a href="{{ page.previous.url | relative_url }}" class="post-nav-prev">← 上一期</a>
+      {% endif %}
+      {% if page.next.url %}
+        <a href="{{ page.next.url | relative_url }}" class="post-nav-next">下一期 →</a>
+      {% endif %}
+    </nav>
+  </div>
+</article>

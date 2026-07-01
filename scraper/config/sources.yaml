@@ -1,0 +1,32 @@
+biorxiv:
+  categories:
+    - bioinformatics
+    - genomics
+    - molecular_biology
+  days_lookback: 7
+  max_results_per_category: 50
+
+pubmed:
+  api_key: ""
+  email: "genoweekly@example.com"
+  days_lookback: 7
+  max_results_per_query: 20
+  max_total: 100
+
+github_trending:
+  since: weekly
+  max_repos: 15
+  topics_keywords:
+    - bioinformatics
+    - genomics
+    - computational-biology
+    - single-cell
+    - variant-calling
+    - genome-assembly
+    - rnaseq
+    - proteomics
+    - epigenomics
+    - metagenomics
+    - spatial-transcriptomics
+    - structural-biology
+    - biostatistics

@@ -1,0 +1,36 @@
+---
+layout: default
+---
+
+<div class="hero">
+  <div class="container">
+    <h1 class="hero-title">{{ site.title }}</h1>
+    <p class="hero-desc">{{ site.description }}</p>
+  </div>
+</div>
+
+<div class="container">
+  {% if paginator.posts.size > 0 %}
+    {% assign latest = paginator.posts.first %}
+    <section class="latest-issue">
+      <div class="issue-header">
+        <h2>{{ latest.title }}</h2>
+        <time class="issue-date" datetime="{{ latest.date | date_to_xmlschema }}">
+          {{ latest.date | date: "%Y年%-m月%-d日" }} · 第{{ latest.week }}周
+        </time>
+        {% if latest.summary %}
+          <p class="issue-summary">{{ latest.summary }}</p>
+        {% endif %}
+      </div>
+
+      <div class="issue-content">
+        {{ latest.content }}
+      </div>
+    </section>
+  {% else %}
+    <section class="empty-state">
+      <h2>暂无内容</h2>
+      <p>第一期 GenoWeekly 正在准备中，敬请期待。</p>
+    </section>
+  {% endif %}
+</div>

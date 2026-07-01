@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sliver Vibe Coding"
+  short_description: "面向非技术用户的 AI 项目治理、真源模板、验收交接与发布工作流"
+  default_prompt: "Use $sliver-vibe-coding to 体检我的项目，判断现在该先启动救援、补真源模板、治理 AI 债务、继续开发、交接，还是准备部署发布。"

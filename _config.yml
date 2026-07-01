@@ -1,0 +1,50 @@
+title: GenoWeekly
+description: 每周生物信息学资讯汇总 — 工具更新、新方法论文、前沿进展
+url: "https://yourusername.github.io"
+baseurl: "/GenoWeekly"
+
+author:
+  name: GenoWeekly Editor
+
+# 主题设置
+theme_settings:
+  accent_color: "#e86f2a"
+  background: "#ffffff"
+  secondary_bg: "#f8f9fa"
+  text_color: "#1a1a2e"
+  secondary_text: "#6b7280"
+
+# 分页
+paginate: 1
+paginate_path: "/page:num/"
+
+# 默认 Front Matter
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: week
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+# 构建配置
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+plugins:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+
+exclude:
+  - scraper/
+  - docs/
+  - README.md
+  - Gemfile.lock
+  - vendor/

@@ -1,0 +1,115 @@
+fields:
+  - id: genomics
+    name_cn: 基因组学
+    name_en: Genomics
+    description: 基因组组装、变异检测与群体遗传学
+    keywords:
+      - genome
+      - whole genome
+      - genome assembly
+      - genome assembly
+      - variant
+      - SNP
+      - GWAS
+      - structural variant
+      - long-read
+      - de novo assembly
+      - haplotyping
+      - pangenome
+      - population genetics
+
+  - id: transcriptomics
+    name_cn: 转录组学
+    name_en: Transcriptomics
+    description: RNA 表达、可变剪接与转录调控
+    keywords:
+      - transcriptome
+      - RNA-seq
+      - expression
+      - splicing
+      - isoform
+      - alternative splicing
+      - polyadenylation
+      - RNA velocity
+      - gene expression
+      - transcriptional regulation
+
+  - id: single-cell
+    name_cn: 单细胞组学
+    name_en: Single-cell
+    description: 单细胞测序、细胞图谱与多模态分析
+    keywords:
+      - single cell
+      - single-cell
+      - scRNA-seq
+      - scATAC-seq
+      - cell type
+      - cell atlas
+      - multimodal
+      - CITE-seq
+      - trajectory inference
+      - cell-cell communication
+
+  - id: proteomics
+    name_cn: 蛋白质组学
+    name_en: Proteomics
+    description: 质谱分析、蛋白质互作与翻译后修饰
+    keywords:
+      - proteome
+      - proteomics
+      - mass spec
+      - mass spectrometry
+      - protein interaction
+      - protein-protein
+      - post-translational modification
+      - peptide
+      - alphafold
+      - protein structure
+
+  - id: epigenomics
+    name_cn: 表观遗传学
+    name_en: Epigenomics
+    description: 甲基化、组蛋白修饰与染色质状态
+    keywords:
+      - epigenome
+      - epigenomics
+      - methylation
+      - DNA methylation
+      - histone
+      - chromatin
+      - ChIP-seq
+      - chromatin accessibility
+      - ATAC-seq
+      - Hi-C
+      - 3D genome
+
+  - id: metagenomics
+    name_cn: 宏基因组学
+    name_en: Metagenomics
+    description: 微生物组、16S 与宏基因组组装
+    keywords:
+      - metagenome
+      - metagenomics
+      - microbiome
+      - 16S
+      - shotgun metagenomic
+      - metagenomic assembly
+      - microbial community
+      - gut microbiome
+      - taxonomic profiling
+
+  - id: spatial-omics
+    name_cn: 时空组学
+    name_en: Spatial-omics
+    description: 空间转录组、原位成像与组织图谱
+    keywords:
+      - spatial
+      - spatial transcriptomics
+      - spatial omics
+      - MERFISH
+      - Visium
+      - in situ
+      - tissue atlas
+      - spatial profiling
+      - Xenium
+      - CosMx

@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+<div class="container">
+  <h1 class="page-title">归档</h1>
+
+  {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+
+  {% if posts_by_year.size > 0 %}
+    {% for year_group in posts_by_year %}
+      <div class="archive-year">
+        <h2 class="archive-year-title">{{ year_group.name }}年</h2>
+        <ul class="archive-list">
+          {% for post in year_group.items %}
+            <li class="archive-item">
+              <a href="{{ post.url | relative_url }}">
+                <span class="archive-week">第{{ post.week }}周</span>
+                <span class="archive-date">({{ post.date | date: "%-m月%-d日" }})</span>
+                <span class="archive-meta">{{ post.summary }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <p>暂无归档内容，敬请期待。</p>
+    </div>
+  {% endif %}
+</div>
