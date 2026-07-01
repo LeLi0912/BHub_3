@@ -35,7 +35,7 @@
       <div class="container">
         <a href="/BHub_3/" class="site-title">GenoWeekly</a>
         <nav class="site-nav">
-          <a href="/BHub_3/">首页</a>
+          <a href="/BHub_3/" class="active">首页</a>
           <a href="/BHub_3/archive">归档</a>
           <a href="/BHub_3/about">关于</a>
         </nav>
@@ -43,7 +43,12 @@
     </header>
 
     <main class="site-content">
-      <div class="hero">
+      
+
+
+
+
+<div class="hero">
   <div class="container">
     <h1 class="hero-title">GenoWeekly</h1>
     <p class="hero-desc">每周生物信息学资讯汇总 — 工具更新、新方法论文、前沿进展</p>
@@ -53,6 +58,8 @@
 <div class="container">
   
     
+    
+
     <section class="latest-issue">
       <div class="issue-header">
         <h2>GenoWeekly #27</h2>
@@ -62,10 +69,177 @@
         
           <p class="issue-summary">本期覆盖 12 条工具更新、8 篇新方法论文、3 项前沿进展</p>
         
+        
+          <div class="post-sources">
+            数据来源:
+            
+              <span class="source-badge">biorxiv</span>
+            
+              <span class="source-badge">pubmed</span>
+            
+              <span class="source-badge">github</span>
+            
+          </div>
+        
       </div>
 
-      <div class="issue-content">
-        <h2 id="-新工具与数据库更新">🛠 新工具与数据库更新</h2>
+      
+        <!-- ===== 领域速览 ===== -->
+        <div class="domain-intro">
+          <div class="domain-intro-header">📌 领域速览 — 点击卡片快速查看</div>
+          <div class="domain-intro-grid">
+            
+              
+              
+              <div class="domain-intro-card" data-domain="genomics">
+                <span class="d-name">基因组学 <span class="d-en">Genomics</span></span>
+                <div class="d-desc">基因组组装、变异检测、GWAS 等</div>
+                
+                  <span class="d-status has-data">4 条更新</span>
+                
+              </div>
+            
+              
+              
+              <div class="domain-intro-card" data-domain="transcriptomics">
+                <span class="d-name">转录组学 <span class="d-en">Transcriptomics</span></span>
+                <div class="d-desc">RNA-seq、可变剪接、表达定量</div>
+                
+                  <span class="d-status has-data">1 条更新</span>
+                
+              </div>
+            
+              
+              
+              <div class="domain-intro-card" data-domain="single-cell">
+                <span class="d-name">单细胞组学 <span class="d-en">Single-cell</span></span>
+                <div class="d-desc">scRNA-seq、细胞类型注释、多模态</div>
+                
+                  <span class="d-status has-data">3 条更新</span>
+                
+              </div>
+            
+              
+              
+              <div class="domain-intro-card" data-domain="proteomics">
+                <span class="d-name">蛋白质组学 <span class="d-en">Proteomics</span></span>
+                <div class="d-desc">质谱分析、蛋白互作、翻译后修饰</div>
+                
+                  <span class="d-status has-data">1 条更新</span>
+                
+              </div>
+            
+              
+              
+              <div class="domain-intro-card" data-domain="epigenomics">
+                <span class="d-name">表观遗传学 <span class="d-en">Epigenomics</span></span>
+                <div class="d-desc">DNA 甲基化、组蛋白修饰、染色质状态</div>
+                
+                  <span class="d-status has-data">2 条更新</span>
+                
+              </div>
+            
+              
+              
+              <div class="domain-intro-card" data-domain="metagenomics">
+                <span class="d-name">宏基因组学 <span class="d-en">Metagenomics</span></span>
+                <div class="d-desc">微生物组、16S、鸟枪法宏基因组</div>
+                
+                  <span class="d-status has-data">1 条更新</span>
+                
+              </div>
+            
+              
+              
+              <div class="domain-intro-card" data-domain="spatial-omics">
+                <span class="d-name">时空组学 <span class="d-en">Spatial-omics</span></span>
+                <div class="d-desc">空间转录组、MERFISH、Visium</div>
+                
+                  <span class="d-status no-data">暂无更新</span>
+                
+              </div>
+            
+          </div>
+        </div>
+
+        <!-- ===== 领域分布图 ===== -->
+        
+        
+        
+
+        <!-- ===== 领域侧边栏 + 内容 ===== -->
+        <div class="domain-layout">
+          <aside class="domain-sidebar" id="domainSidebar">
+            <div class="domain-sidebar-header">领域导航</div>
+            
+              
+              
+              <button class="domain-item active" data-domain="genomics">
+                基因组学
+                
+                  <span class="domain-count">4</span>
+                
+              </button>
+            
+              
+              
+              <button class="domain-item " data-domain="transcriptomics">
+                转录组学
+                
+                  <span class="domain-count">1</span>
+                
+              </button>
+            
+              
+              
+              <button class="domain-item " data-domain="single-cell">
+                单细胞组学
+                
+                  <span class="domain-count">3</span>
+                
+              </button>
+            
+              
+              
+              <button class="domain-item " data-domain="proteomics">
+                蛋白质组学
+                
+                  <span class="domain-count">1</span>
+                
+              </button>
+            
+              
+              
+              <button class="domain-item " data-domain="epigenomics">
+                表观遗传学
+                
+                  <span class="domain-count">2</span>
+                
+              </button>
+            
+              
+              
+              <button class="domain-item " data-domain="metagenomics">
+                宏基因组学
+                
+                  <span class="domain-count">1</span>
+                
+              </button>
+            
+              
+              
+              <button class="domain-item " data-domain="spatial-omics">
+                时空组学
+                
+                  <span class="empty-dot"></span>
+                
+              </button>
+            
+          </aside>
+
+          <main class="domain-content">
+            <div class="post-content">
+              <h2 id="-新工具与数据库更新">🛠 新工具与数据库更新</h2>
 
 <h3 id="基因组学">基因组学</h3>
 
@@ -329,8 +503,13 @@
 
 <p>在基因组学方面，长读长测序技术的持续改进使得结构变异的检测变得更加准确和全面，这将有助于更好地理解人类疾病相关的基因组变异。</p>
 
-      </div>
+            </div>
+          </main>
+        </div>
+
+      
     </section>
+
   
 </div>
 
@@ -342,5 +521,7 @@
       </div>
     </footer>
   </div>
+
+  <script src="/BHub_3/assets/js/main.js"></script>
 </body>
 </html>
