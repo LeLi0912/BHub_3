@@ -62,7 +62,8 @@ layout: default
         <!-- ===== 领域分布图 ===== -->
         {% assign total = 0 %}
         {% for i in (0..6) %}
-          {% assign total = total | plus: dc[domains[i]] | default: 0 %}
+          {% assign count = dc[domains[i]] %}
+          {% if count %}{% assign total = total | plus: count %}{% endif %}
         {% endfor %}
         {% if total > 0 %}
           {% assign max_count = 0 %}

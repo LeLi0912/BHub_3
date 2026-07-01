@@ -31,6 +31,22 @@
     "spatial-omics",
   ];
 
+  // --- Clone content for panels, stripping redundant columns ---
+  function cloneForPanel(el) {
+    var clone = el.cloneNode(true);
+    if (clone.tagName === "TABLE") {
+      // Remove the "领域" column (2nd column) — redundant inside a domain panel
+      clone.querySelectorAll("tr").forEach(function (row) {
+        if (row.children[1]) row.children[1].remove();
+      });
+      var wrap = document.createElement("div");
+      wrap.className = "table-wrap";
+      wrap.appendChild(clone);
+      return wrap;
+    }
+    return clone;
+  }
+
   // --- Reorganize post content into domain panels ---
   function initPanelSystem() {
     var content = document.querySelector(".post-content");
@@ -148,7 +164,7 @@
         st.innerHTML = '<span class="icon">🛠</span> 新工具与数据库更新';
         panel.appendChild(st);
         pd.tools.forEach(function (n) {
-          panel.appendChild(n.cloneNode(true));
+          panel.appendChild(cloneForPanel(n));
         });
       }
 
@@ -159,7 +175,7 @@
         sp.innerHTML = '<span class="icon">📄</span> 新方法与论文';
         panel.appendChild(sp);
         pd.papers.forEach(function (n) {
-          panel.appendChild(n.cloneNode(true));
+          panel.appendChild(cloneForPanel(n));
         });
       }
 
@@ -171,7 +187,7 @@
       var fw = document.createElement("div");
       fw.className = "frontier-section";
       frontierNodes.forEach(function (n) {
-        fw.appendChild(n.cloneNode(true));
+        fw.appendChild(cloneForPanel(n));
       });
       content.appendChild(fw);
     }
